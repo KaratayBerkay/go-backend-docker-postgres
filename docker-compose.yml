@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  go_app:
+    build: .
+    container_name: go_container
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "[ -f go.mod ] || go mod init go-backend-docker-postgres && go mod tidy && go build -o app main.go && ./app"
+    ports:
+      - "8080:8080"
