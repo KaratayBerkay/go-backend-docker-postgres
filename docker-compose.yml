@@ -1,12 +1,35 @@
-version: '3.8'
 
 services:
+
+  postgres_db:
+    image: 'bitnami/postgresql:latest'
+    container_name: postgres_db
+    restart: on-failure
+    networks:
+      - service
+    environment:
+      - POSTGRES_DB=test_database
+      - POSTGRES_USER=test_user
+      - POSTGRES_PASSWORD=test_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/bitnami/postgresql
+
   go_app:
     build: .
     container_name: go_container
     working_dir: /app
     volumes:
       - .:/app
+    networks:
+      - service
     command: sh -c "[ -f go.mod ] || go mod init go-backend-docker-postgres && go mod tidy && go build -o app main.go && ./app"
     ports:
       - "8080:8080"
+
+volumes:
+  postgres_data:
+
+networks:
+  service:
