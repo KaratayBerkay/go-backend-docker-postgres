@@ -27,3 +27,5 @@ go.work.sum
 # pycahrm utilites
 .idea/
 
+# go modulars
+*.mod
