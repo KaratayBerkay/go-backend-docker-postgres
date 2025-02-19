@@ -5,7 +5,7 @@ FROM golang:latest
 WORKDIR /app
 
 # Copy the rest of the project files
-COPY . .
+COPY from_fiber .
 
 # Build the Go application
 RUN go mod init github.com/KaratayBerkay/go-backend-docker-postgres || echo "Already exists"

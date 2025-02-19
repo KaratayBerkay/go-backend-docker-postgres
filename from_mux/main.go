@@ -1,15 +1,14 @@
 package main
 
 import (
-//     "net/http"
     "log"
     "fmt"
     "time"
     "gorm.io/gorm"
     "github.com/joho/godotenv"
     "github.com/gofiber/fiber/v2"
-    "github.com/KaratayBerkay/go-backend-docker-postgres/storage"
-    "github.com/KaratayBerkay/go-backend-docker-postgres/models"
+    "github.com/KaratayBerkay/go-backend-docker-postgres/from_mux/storage"
+    "github.com/KaratayBerkay/go-backend-docker-postgres/from_mux/models"
 )
 
 
@@ -22,8 +21,8 @@ type User struct {
     Email string `json:"email"`
     Password string `json:"password"`
     Name string `json:"name"`
-    ID uint `json:"id"`
 }
+
 
 func (r *Repository) CreateUser(c *fiber.Ctx) error {
     user := new(User)
@@ -34,11 +33,13 @@ func (r *Repository) CreateUser(c *fiber.Ctx) error {
     return c.JSON(user)
 }
 
+
 func (r *Repository) GetUsers(c *fiber.Ctx) error {
     var users []User
     r.DB.Find(&users)
     return c.JSON(users)
 }
+
 
 func (r *Repository) DeleteUser(c *fiber.Ctx) error {
     id := c.Params("id")
@@ -105,7 +106,7 @@ func main() {
 		SSLMode:  "disable", // Change as needed
 	}
 
-    time.Sleep(30 * time.Second)    // Wait for postgres to start
+    time.Sleep(20 * time.Second)    // Wait for postgres to start
 
 	db, err := storage.NewConnection(config)
 	if err != nil {
