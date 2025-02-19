@@ -24,8 +24,8 @@ services:
     container_name: go_app
     depends_on:
       - postgres_db_for_go_app
-    volumes:
-      - godata:/app
+#    volumes:
+#      - godata:/app
     networks:
       - service
     ports:
@@ -34,7 +34,7 @@ services:
 
 volumes:
   postgres_data:
-  godata:
+#  godata:
 
 networks:
   service:
