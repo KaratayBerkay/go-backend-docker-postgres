@@ -8,6 +8,7 @@ import (
     "github.com/joho/godotenv"
     "github.com/gofiber/fiber/v2"
     "github.com/KaratayBerkay/go-backend-docker-postgres/storage"
+    "github.com/KaratayBerkay/go-backend-docker-postgres/models"
 )
 
 
@@ -86,6 +87,7 @@ func (r *Repository) SetupRoutes(app *fiber.App) {
     api.Put("/users/:id", r.UpdateUser)
 }
 
+
 func main() {
 
     err := godotenv.Load(".env")
@@ -108,11 +110,11 @@ func main() {
 	}
 
 	fmt.Println("Database connection successful!", db)
-
     if err != nil {
         fmt.Println("Error connecting to database")
     }
 
+    err = models.MigrateUsers(db)
     r := Repository{DB: db}
     app := fiber.New()
     r.SetupRoutes(app)
