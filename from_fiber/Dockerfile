@@ -8,7 +8,7 @@ WORKDIR /app
 COPY from_fiber .
 
 # Build the Go application
-RUN go mod init github.com/KaratayBerkay/go-backend-docker-postgres || echo "Already exists"
+RUN go mod init github.com/KaratayBerkay/go-backend-docker-postgres/from_fiber || echo "Already exists"
 RUN go mod tidy
 RUN go build -o app main.go
 

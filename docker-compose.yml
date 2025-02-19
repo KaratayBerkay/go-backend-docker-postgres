@@ -19,22 +19,34 @@ services:
       retries: 5
       start_period: 80s
 
-  go_app:
-    build: .
-    container_name: go_app
+  go_app_fiber:
+    container_name: go_app_fiber
+    build:
+      context: .
+      dockerfile: from_fiber/Dockerfile
     depends_on:
       - postgres_db_for_go_app
-#    volumes:
-#      - godata:/app
     networks:
       - service
     ports:
       - "8000:8000"
     restart: always
 
+  go_app_mux:
+    container_name: go_app_mux
+    build:
+      context: .
+      dockerfile: from_mux/Dockerfile
+    depends_on:
+      - postgres_db_for_go_app
+    networks:
+      - service
+    ports:
+      - "8001:8000"
+    restart: always
+
 volumes:
   postgres_data:
-#  godata:
 
 networks:
   service:
