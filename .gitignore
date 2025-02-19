@@ -30,3 +30,4 @@ go.work.sum
 
 # go modulars
 *.mod
+app
