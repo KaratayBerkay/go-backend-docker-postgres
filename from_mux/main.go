@@ -41,52 +41,10 @@ func (r *Repository) GetUsers(c *fiber.Ctx) error {
 }
 
 
-func (r *Repository) DeleteUser(c *fiber.Ctx) error {
-    id := c.Params("id")
-    var user User
-    r.DB.First(&user, id)
-    if user.ID == 0 {
-        return c.Status(404).SendString("No user found with ID")
-    }
-    r.DB.Delete(&user)
-    return c.SendString("User successfully deleted")
-}
-
-
-func (r *Repository) GetUser(c *fiber.Ctx) error {
-    id := c.Params("id")
-    var user User
-    r.DB.First(&user, id)
-    if user.ID == 0 {
-        return c.Status(404).SendString("No user found with ID")
-    }
-    return c.JSON(user)
-}
-
-
-func (r *Repository) UpdateUser(c *fiber.Ctx) error {
-    id := c.Params("id")
-    var user User
-    r.DB.First(&user, id)
-    if user.ID == 0 {
-        return c.Status(404).SendString("No user found with ID")
-    }
-    newUser := new(User)
-    if err := c.BodyParser(newUser); err != nil {
-        return c.Status(400).SendString(err.Error())
-    }
-    r.DB.Model(&user).Updates(newUser)
-    return c.JSON(user)
-}
-
-
 func (r *Repository) SetupRoutes(app *fiber.App) {
     api := app.Group("/api")
     api.Post("/users", r.CreateUser)
     api.Get("/users", r.GetUsers)
-    api.Delete("/users/:id", r.DeleteUser)
-    api.Get("/users/:id", r.GetUser)
-    api.Put("/users/:id", r.UpdateUser)
 }
 
 
@@ -107,7 +65,6 @@ func main() {
 	}
 
     time.Sleep(20 * time.Second)    // Wait for postgres to start
-
 	db, err := storage.NewConnection(config)
 	if err != nil {
 		log.Fatalf("Database connection failed: %v", err)
