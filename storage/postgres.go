@@ -13,13 +13,7 @@ type Config struct {
     Password string
     User string
     Database string
-    SSLMode *string
-}{
-    Host: "0.0.0.0",
-    Port: "5432",
-    Password: "test_password",
-    User: "test_user",
-    Database: "test_database",
+    SSLMode string
 }
 
 

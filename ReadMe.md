@@ -7,7 +7,7 @@ Run Go app with
 docker compose up --build -d
 ```
 
-go mod init app => to create a new module
+go mod init github.com/KaratayBerkay/go-backend-docker-postgres
 go mod tidy => to download all dependencies
 
 

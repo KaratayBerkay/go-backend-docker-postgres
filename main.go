@@ -7,7 +7,7 @@ import (
     "gorm.io/gorm"
     "github.com/joho/godotenv"
     "github.com/gofiber/fiber/v2"
-    "storage"
+    "github.com/KaratayBerkay/go-backend-docker-postgres/storage"
 )
 
 
@@ -94,7 +94,7 @@ func main() {
     }
 
 	config := storage.Config{
-		Host:     "0.0.0.0",
+		Host:     "postgres_db_for_go_app",
 		Port:     "5432",
 		User:     "test_user",
 		Password: "test_password",
