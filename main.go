@@ -4,6 +4,7 @@ import (
 //     "net/http"
     "log"
     "fmt"
+    "time"
     "gorm.io/gorm"
     "github.com/joho/godotenv"
     "github.com/gofiber/fiber/v2"
@@ -104,17 +105,23 @@ func main() {
 		SSLMode:  "disable", // Change as needed
 	}
 
+    time.Sleep(30 * time.Second)    // Wait for postgres to start
+
 	db, err := storage.NewConnection(config)
 	if err != nil {
 		log.Fatalf("Database connection failed: %v", err)
 	}
+
+    models.MigrateUsers(db)
+    if err != nil {
+        fmt.Println("Error migrating users")
+    }
 
 	fmt.Println("Database connection successful!", db)
     if err != nil {
         fmt.Println("Error connecting to database")
     }
 
-    err = models.MigrateUsers(db)
     r := Repository{DB: db}
     app := fiber.New()
     r.SetupRoutes(app)

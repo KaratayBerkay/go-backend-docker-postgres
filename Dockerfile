@@ -8,7 +8,9 @@ WORKDIR /app
 COPY . .
 
 # Build the Go application
-RUN go build -o /app/app main.go
+RUN go mod init github.com/KaratayBerkay/go-backend-docker-postgres || echo "Already exists"
+RUN go mod tidy
+RUN go build -o app main.go
 
 # Set the correct CMD path
-CMD ["/app/app"]
+CMD ["./app"]
